@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @Slf4j
 @Service
 @RequiredArgsConstructor
-public class AyatSearchService {
+public class    AyatSearchService {
 
     @Value("${quran.translation.english-contribution-id:4}")
     private Long englishContributionId;
