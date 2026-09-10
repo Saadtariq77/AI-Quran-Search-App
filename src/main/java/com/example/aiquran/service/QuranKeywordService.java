@@ -2,7 +2,7 @@ package com.example.aiquran.service;
 
 import com.example.aiquran.dto.KeywordExpansionDto;
 import com.example.aiquran.dto.KeywordExpansionDto.ConceptGroup;
-import com.example.aiquran.exception.GeminiUnavailableException;
+import com.example.aiquran.exception.LlmUnavailableException;
 import com.example.aiquran.util.QuranTextUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,7 +22,7 @@ import java.util.regex.Pattern;
 @RequiredArgsConstructor
 public class QuranKeywordService {
 
-    private final GeminiService geminiService;
+    private final LlmService llmService;
     private final ObjectMapper objectMapper;
 
     private static final Pattern FENCE =
@@ -83,8 +83,8 @@ public class QuranKeywordService {
 
         String raw = null;
         try {
-            raw = geminiService.generateJson(SYSTEM_PROMPT, userPrompt);
-            log.debug("Gemini expansion raw: {}", raw);
+            raw = llmService.generateJson(SYSTEM_PROMPT, userPrompt);
+            log.debug("LLM expansion raw: {}", raw);
 
             KeywordExpansionDto dto = objectMapper.readValue(extractJson(raw), KeywordExpansionDto.class);
             KeywordExpansionDto clean = sanitize(dto, userQuery);
@@ -101,8 +101,8 @@ public class QuranKeywordService {
                             .toList());
             return clean;
 
-        } catch (GeminiUnavailableException e) {
-            log.warn("Gemini unavailable during expansion of '{}': {}", userQuery, e.getMessage());
+        } catch (LlmUnavailableException e) {
+            log.warn("LLM unavailable during expansion of '{}': {}", userQuery, e.getMessage());
             return fallback(userQuery);
         } catch (Exception e) {
             log.error("Expansion failed for '{}'. Raw was: {}", userQuery, raw, e);
@@ -169,7 +169,7 @@ public class QuranKeywordService {
                 .toList();
 
         if (!missed.isEmpty()) {
-            log.debug("Adding user tokens Gemini missed: {}", missed);
+            log.debug("Adding user tokens LLM missed: {}", missed);
             concepts.add(ConceptGroup.builder()
                     .concept("user-terms")
                     .importance("related")

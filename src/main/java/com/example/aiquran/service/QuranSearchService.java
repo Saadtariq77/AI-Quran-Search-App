@@ -1,7 +1,7 @@
 package com.example.aiquran.service;
 
 import com.example.aiquran.dto.*;
-import com.example.aiquran.exception.GeminiUnavailableException;
+import com.example.aiquran.exception.LlmUnavailableException;
 import com.example.aiquran.util.JsonUtils;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -18,7 +18,7 @@ public class QuranSearchService {
 
     private final QuranKeywordService keywordService;
     private final AyatSearchService ayatSearchService;
-    private final GeminiService geminiService;
+    private final LlmService llmService;
     private final ObjectMapper objectMapper;
 
     @Value("${quran.search.max-ayats:6}")
@@ -66,7 +66,7 @@ public class QuranSearchService {
                 AiAnalysisDto analysis = analyze(query, ayats);
                 ayats = merge(ayats, analysis);
                 reflection = analysis.getReflection();
-            } catch (GeminiUnavailableException e) {
+            } catch (LlmUnavailableException e) {
                 log.warn("AI analysis unavailable for '{}': {}", query, e.getMessage());
                 degraded = true;
             } catch (Exception e) {
@@ -98,7 +98,7 @@ public class QuranSearchService {
         }
         sb.append("Return the JSON object.");
 
-        String raw = geminiService.generateJson(SYSTEM_PROMPT, sb.toString());
+        String raw = llmService.generateJson(SYSTEM_PROMPT, sb.toString());
         log.debug("AI analysis raw: {}", raw);
 
         AiAnalysisDto dto = objectMapper.readValue(

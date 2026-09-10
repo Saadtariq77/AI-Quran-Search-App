@@ -14,9 +14,9 @@ import org.springframework.web.client.RestTemplate;
 import java.util.List;
 
 @Slf4j
-@Service
+@Service("geminiService")
 @RequiredArgsConstructor
-public class GeminiService {
+public class GeminiService implements LlmService {
 
     private final RestTemplate restTemplate;
 
@@ -29,10 +29,12 @@ public class GeminiService {
     @Value("${gemini.model}")
     private String model;
 
+    @Override
     public String generateContent(String systemPrompt, String userPrompt) {
         return call(systemPrompt, userPrompt, false, 0.7);
     }
 
+    @Override
     public String generateJson(String systemPrompt, String userPrompt) {
         return call(systemPrompt, userPrompt, true, 0.2);
     }
