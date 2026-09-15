@@ -20,7 +20,9 @@ public final class QuranTextUtils {
             "made","thing","things","something","anything","everything","way","ways","how","what","why",
             "when","where","who","which","some","any","all","more","most","much","many","also","really",
             "quran","quranic","verse","verses","ayat","ayah","ayats","surah","sura","chapter","islam",
-            "islamic","muslim","muslims","tell me","related","relevant","regarding","concerning"
+            "islamic","muslim","muslims","tell me","related","relevant","regarding","concerning",
+            "hazrat","sayyidina","sayyiduna","maulana","janab","imam","sheikh","shaykh",
+            "sahaba","sahabi","pbuh","saw","ra","as","swt"
     );
 
     /**

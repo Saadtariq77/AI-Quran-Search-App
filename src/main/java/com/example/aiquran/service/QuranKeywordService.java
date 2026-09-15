@@ -37,8 +37,9 @@ public class QuranKeywordService {
 
             CRITICAL RULES
             1. Output STRICT JSON only. No prose, no markdown fences.
-            2. IGNORE intent words: want, need, wish, looking for, tell me, show me, help,
-               please, verse, ayat, surah, quran. Extract only the SUBSTANTIVE concept.
+            2. IGNORE intent words and titles: want, need, wish, looking for, tell me, show me, help,
+               please, verse, ayat, surah, quran, hazrat, sayyiduna, sayyidina, maulana, imam, sheikh,
+               pbuh, saw, ra, as. Extract only the SUBSTANTIVE concept or entity.
             3. Each concept group MUST include every common inflection and part of speech:
                noun, plural, verb base form, third person, past tense, gerund, adjective, adverb.
                Example concept "marriage" -> terms: marriage, marriages, marry, marries,
@@ -55,6 +56,15 @@ public class QuranKeywordService {
                (allah, god, lord, indeed, people, day, believe) unless that IS the query.
             7. phrases: 0 to 4 multi-word strings likely to appear verbatim.
             8. NEVER output verse numbers. NEVER quote the Quran.
+            9. PERSONAL NAMES & HISTORICAL PERSONALITIES:
+               a. Figures explicitly named in the Quran (Muhammad, Musa, Ibrahim, Maryam, Isa,
+                  Yusuf, Adam, Nuh, Dawud, Sulayman, Zayd, Luqman, Pharaoh, etc.):
+                  Include their literal English name + roles (e.g. Muhammad -> muhammad, prophet, messenger, apostle).
+               b. Figures NOT named by proper noun in the Quran (Ayesha, Abu Bakr, Ali, Fatima, Khadija, etc.):
+                  Translate into the SPECIFIC contextual Quranic events, designations, and vocabulary:
+                  - Ayesha -> wives of the prophet, mothers of the believers, slander, ifk, chaste women, purity (Surah An-Nur 24:11-26, Al-Ahzab 33).
+                  - Abu Bakr -> companion in the cave, second of the two, spending wealth for Allah (Surah At-Tawbah 9:40, Al-Layl 92).
+                  - Ali / Ahl al-Bayt -> household of the prophet, purification, feeding the needy orphan captive (Surah Al-Ahzab 33:33, Al-Insan 76).
 
             SCHEMA
             {

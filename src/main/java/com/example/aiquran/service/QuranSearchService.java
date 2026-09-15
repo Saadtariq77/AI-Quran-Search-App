@@ -48,6 +48,9 @@ public class QuranSearchService {
                the verse text. Explain only WHY it answers their question.
             5. If nothing is relevant, return "selected": [] and say so in "reflection".
             6. No religious rulings or fatwa. Offer reflection, not verdicts.
+            7. For personalities not explicitly mentioned by name in the Quran (such as Aisha, Abu Bakr, Ali):
+               briefly explain in "reflection" and "reason" the historical/revelation context (e.g. Asbab al-Nuzul,
+               Incident of Ifk, the Cave, or Ahl al-Bayt) that connects these verses to the figure queried.
             """;
 
     public QuranSearchResponse search(QuranSearchRequest request) {
