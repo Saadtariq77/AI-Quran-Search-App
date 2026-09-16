@@ -19,6 +19,7 @@ public class QuranSearchController {
 
     private final QuranSearchService quranSearchService;
     private final QuranKeywordService keywordService;
+    private final com.example.aiquran.service.QuranExploreService exploreService;
 
     @PostMapping("/search")
     public ResponseEntity<QuranSearchResponse> search(@RequestBody QuranSearchRequest request) {
@@ -31,6 +32,25 @@ public class QuranSearchController {
                                                          @RequestParam(required = false) Integer limit) {
         return ResponseEntity.ok(quranSearchService.search(
                 QuranSearchRequest.builder().query(q).maxAyats(limit).build()));
+    }
+
+    @PostMapping("/explore")
+    public ResponseEntity<com.example.aiquran.dto.AyatExploreResponse> explore(
+            @RequestBody com.example.aiquran.dto.AyatExploreRequest request) {
+        log.info("Quran explore: {}:{}", request.getSurahNo(), request.getAyatNo());
+        return ResponseEntity.ok(exploreService.explore(request));
+    }
+
+    @GetMapping("/explore")
+    public ResponseEntity<com.example.aiquran.dto.AyatExploreResponse> exploreGet(
+            @RequestParam int surah,
+            @RequestParam int ayat) {
+        log.info("Quran explore (GET): {}:{}", surah, ayat);
+        return ResponseEntity.ok(exploreService.explore(
+                com.example.aiquran.dto.AyatExploreRequest.builder()
+                        .surahNo(surah)
+                        .ayatNo(ayat)
+                        .build()));
     }
 
     @GetMapping("/debug/expand")
